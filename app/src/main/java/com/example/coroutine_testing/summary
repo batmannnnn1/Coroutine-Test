@@ -1,0 +1,23 @@
+You can test your coroutines with the help of testCoroutine library....
+
+                ** Point that you shouldn't forget...
+
+ Make your coroutines runs on the same thread if you wanna test them...
+ this is very easy for testing the coroutine we don't hardcoded the dispatcher instead of this
+ we'll inject them into the coroutine class constructor and then pass in coroutine...
+
+For Coroutine we'll use the StandardTestDispatcher and for main Purpose you can use any dispatcher...
+
+so when you use a TestDispatcher in a test coroutines are scheduled but not automatically run..
+they need to be explicitly controlled
+so you have to pass this this info for running the coroutine
+
+        mainCoroutineRule.testDispatcher.scheduler.advanceUntilIdle()
+
+             *** NOTE
+  if you don't explicitly run the coroutine and if you don't use assertions methods , the test might
+  pass even if the coroutine logic don't executed at all because:
+
+  Coroutines are not run automatically
+  no assertions means no failure: if you don't have any assertions the test won't fail
+  because no condition is being checked , in this case the test would simply pass by default...
